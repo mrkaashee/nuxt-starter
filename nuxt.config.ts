@@ -8,7 +8,10 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-  ui: { content: true },
+  ui: {
+    content: true,
+    experimental: { componentDetection: true }
+  },
   compatibilityDate: '2025-07-15',
   eslint: { config: { stylistic: true } },
 })
