@@ -12,18 +12,19 @@
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
-    "@nuxt/eslint": "^1.11.0",
+    "@nuxt/eslint": "^1.12.1",
+    "@nuxt/hints": "^1.0.0-alpha.5",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.2.1",
-    "@nuxthub/core": "^0.9.1",
-    "nuxt": "^4.2.1",
+    "@nuxt/ui": "^4.3.0",
+    "@nuxthub/core": "^0.10.4",
+    "nuxt": "^4.2.2",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.411",
-    "eslint": "^9.39.1",
+    "@iconify/json": "^2.2.426",
+    "eslint": "^9.39.2",
     "typescript": "^5.9.3",
-    "wrangler": "^4.51.0"
+    "wrangler": "^4.57.0"
   }
 }

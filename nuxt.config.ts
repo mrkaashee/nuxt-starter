@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxthub/core',
     '@nuxt/image',
+    '@nuxt/hints'
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],

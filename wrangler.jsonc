@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nuxt-starter",
+  "main": "./.output/server/index.mjs",
+  "compatibility_date": "2025-12-18",
+  "assets": {
+    "directory": "./.output/public/",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  // if hub.db is enabled
+  "d1_databases": [],
+}
