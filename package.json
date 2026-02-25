@@ -2,7 +2,7 @@
   "name": "nuxt-app",
   "type": "module",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -12,19 +12,18 @@
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
-    "@nuxt/eslint": "^1.13.0",
-    "@nuxt/hints": "^1.0.0-alpha.6",
+    "@nuxt/eslint": "^1.15.2",
+    "@nuxt/hints": "^1.0.0-alpha.8",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.4.0",
-    "@nuxthub/core": "^0.10.5",
-    "nuxt": "^4.3.0",
+    "@nuxt/ui": "^4.5.0",
+    "@nuxthub/core": "^0.10.6",
+    "nuxt": "^4.3.1",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.433",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.2",
     "typescript": "^5.9.3",
-    "wrangler": "^4.61.0"
+    "wrangler": "^4.68.1"
   }
 }

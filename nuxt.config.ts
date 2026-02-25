@@ -13,10 +13,10 @@ export default defineNuxtConfig({
     content: true,
     experimental: { componentDetection: true }
   },
-  future: { compatibilityVersion: 5 },
+  // future: { compatibilityVersion: 5 },
   experimental: {
     viteEnvironmentApi: true, typescriptPlugin: true, extractAsyncDataHandlers: true
   },
-  compatibilityDate: '2025-07-15',
+  compatibilityDate: '2026-02-25',
   eslint: { config: { stylistic: true } },
 })
