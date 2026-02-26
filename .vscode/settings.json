@@ -2,19 +2,148 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "editor.quickSuggestions": { "strings": "on" },
-  "tailwindCSS.classAttributes": ["class", "ui"],
-  "tailwindCSS.experimental.classRegex": [
-    ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.classAttributes": [
+    "class",
+    "ui"
   ],
-
-  "editor.formatOnSave": false,
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "ui:\\s*{([^)]*)\\s*}",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ]
+  ],
+  "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
   "editor.formatOnType": false,
-
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "never",
     "source.fixAll.eslint": "always"
   },
-  "workbench.colorTheme": "GitHub Dark Default"
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.nuxt": false,
+    "**/.output": false,
+    "**/dist": false
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.nuxt": true,
+    "**/.output": true,
+    "**/package-lock.json": true,
+    "**/bun.lock": true
+  },
+  "explorer.compactFolders": false,
+  "vue.autoInsert.dotValue": true,
+  "workbench.colorTheme": "GitHub Dark Default",
+  "cSpell.words": [
+    "Attendence",
+    "heroicons",
+    "iconify",
+    "libsql",
+    "lucide",
+    "nuxt",
+    "nuxthub",
+    "nuxtjs",
+    "prefs",
+    "qarpeo",
+    "Slideover",
+    "superadmin"
+  ],
+  "todohighlight.isEnable": true,
+  "todohighlight.isCaseSensitive": true,
+  "todohighlight.keywords": [
+    {
+      "text": "TODO:",
+      "color": "#FFFFFF", // White text
+      "backgroundColor": "#007ACC", // VS Code blue
+      "overviewRulerColor": "#007ACC",
+      "isWholeLine": false
+    },
+    {
+      "text": "FIXME:",
+      "color": "#FFFFFF",
+      "backgroundColor": "#FF5555", // Soft red
+      "overviewRulerColor": "#FF5555",
+      "isWholeLine": false
+    },
+    {
+      "text": "BUG:",
+      "color": "#FFFFFF",
+      "backgroundColor": "#D70040", // Crimson red
+      "overviewRulerColor": "#D70040",
+      "isWholeLine": false
+    },
+    {
+      "text": "DEBUG:",
+      "color": "#000000",
+      "backgroundColor": "#32CD32", // Lime green
+      "overviewRulerColor": "#32CD32",
+      "isWholeLine": false
+    },
+    {
+      "text": "NOTE:",
+      "color": "#000000",
+      "backgroundColor": "#FFD700", // Gold
+      "overviewRulerColor": "#FFD700",
+      "isWholeLine": false
+    },
+    {
+      "text": "REVIEW:",
+      "color": "#000000",
+      "backgroundColor": "#FF8C00", // Dark orange
+      "overviewRulerColor": "#FF8C00",
+      "isWholeLine": false
+    },
+    {
+      "text": "HACK:",
+      "color": "#FFFFFF",
+      "backgroundColor": "#C71585", // Medium violet-red
+      "overviewRulerColor": "#C71585",
+      "isWholeLine": false
+    },
+    {
+      "text": "OPTIMIZE:",
+      "color": "#FFFFFF",
+      "backgroundColor": "#20B2AA", // Light sea green
+      "overviewRulerColor": "#20B2AA",
+      "isWholeLine": false
+    },
+    {
+      "text": "CHORE:",
+      "color": "#000000",
+      "backgroundColor": "#ADFF2F", // Green yellow
+      "overviewRulerColor": "#ADFF2F",
+      "isWholeLine": false
+    },
+    {
+      "text": "QUESTION:",
+      "color": "#FFFFFF",
+      "backgroundColor": "#800080", // Purple
+      "overviewRulerColor": "#800080",
+      "isWholeLine": false
+    },
+    {
+      "text": "TEMP:",
+      "color": "#000000",
+      "backgroundColor": "#FFA07A", // Light salmon
+      "overviewRulerColor": "#FFA07A",
+      "isWholeLine": false
+    },
+    {
+      "text": "WIP:",
+      "color": "#FFFFFF",
+      "backgroundColor": "#4682B4", // Steel blue
+      "overviewRulerColor": "#4682B4",
+      "isWholeLine": false
+    }
+  ]
 }
