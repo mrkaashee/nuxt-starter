@@ -1,3 +1,3 @@
 export default eventHandler(() => {
-  return 'api'
+  return sendSuccess('API')
 })
