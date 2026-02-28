@@ -12,5 +12,7 @@ export const seo = sqliteTable('seo', {
   description: text(),
   keywords: text({ mode: 'json' }).$type<string[]>(),
 
+  // Flexible storage for unpredictable fields (twitterTitle, etc.)
+  extraMeta: text('extra_meta', { mode: 'json' }).$type<Record<string, unknown>>(),
   ..._timestamps
 })
