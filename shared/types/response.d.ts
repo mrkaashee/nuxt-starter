@@ -73,7 +73,7 @@ export interface ApiMeta {
 export interface ApiResponse<T = unknown> {
   success: boolean
   message?: string
-  data: T
+  data?: T
   meta?: ApiMeta
   error?: {
     code: string // Machine-readable error code

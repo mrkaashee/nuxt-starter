@@ -5,24 +5,12 @@ export const seo = sqliteTable('seo', {
   ..._uuid,
 
   // Route path
-  route: text('route').unique().notNull(),
+  route: text().unique().notNull(),
 
   // Basic SEO
-  title: text('title'),
-  description: text('description'),
-  keywords: text('keywords', { mode: 'json' })
-    .$type<string[]>(),
-
-  canonicalUrl: text('canonical_url'),
-  robots: text('robots').default('index,follow'),
-
-  // Open Graph
-  ogTitle: text('og_title'),
-  ogDescription: text('og_description'),
-  ogImg: text('og_img'),
-
-  // Twitter
-  twitterImg: text('twitter_img'),
+  title: text(),
+  description: text(),
+  keywords: text({ mode: 'json' }).$type<string[]>(),
 
   ..._timestamps
 })
