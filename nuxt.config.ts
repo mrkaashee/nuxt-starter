@@ -18,5 +18,6 @@ export default defineNuxtConfig({
     viteEnvironmentApi: true, typescriptPlugin: true, extractAsyncDataHandlers: true
   },
   compatibilityDate: '2026-02-25',
+  hub: { db: 'sqlite' },
   eslint: { config: { stylistic: true } },
 })
