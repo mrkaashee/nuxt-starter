@@ -18,7 +18,7 @@
   "dependencies": {
     "@libsql/client": "^0.17.0",
     "@nuxt/eslint": "^1.15.2",
-    "@nuxt/hints": "^1.0.0-alpha.9",
+    "@nuxt/hints": "^1.0.0-alpha.10",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.5.0",
     "@nuxthub/core": "^0.10.6",
