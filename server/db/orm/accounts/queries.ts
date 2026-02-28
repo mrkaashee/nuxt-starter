@@ -1,105 +1,102 @@
-import type { H3Event } from 'h3'
-import type { User } from '#auth-utils'
-import { eq, sql } from 'drizzle-orm'
+import { count as drizzleCount, desc, eq, sql } from 'drizzle-orm'
 
 /**
- * Find a single user by criteria
+ * Find a single account by criteria
  */
-export const get = async (where: Partial<User>) => {
+export const get = async (where: Partial<typeof schema.accounts.$inferSelect>) => {
   try {
-    let query = db.select().from(schema.users)
+    let query = db.select().from(schema.accounts)
 
     // Dynamically add where conditions
     for (const [key, value] of Object.entries(where)) {
       query = query.where(sql`${sql.identifier(key)} = ${value}`)
     }
 
-    const user = await query.limit(1).get()
-    return user || null
+    const account = await query.limit(1).get()
+    return account || null
   }
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to find user'
+      statusText: 'Failed to find account'
     })
   }
 }
 
 /**
- * Find user by ID
+ * Find account by ID
  */
 export const getById = async (id: string) => {
   try {
     return await db.select()
-      .from(schema.users)
-      .where(eq(schema.users.id, id))
+      .from(schema.accounts)
+      .where(eq(schema.accounts.id, id))
       .get()
   }
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to find user by ID'
+      statusText: 'Failed to find account by ID'
     })
   }
 }
 
 /**
- * Find user by email
+ * Find account by email
  */
 export const getByEmail = async (email: string) => {
   try {
     return await db.select()
-      .from(schema.users)
-      .where(eq(schema.users.email, email))
+      .from(schema.accounts)
+      .where(eq(schema.accounts.email, email))
       .get()
   }
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to find user by email'
+      statusText: 'Failed to find account by email'
     })
   }
 }
 
 /**
- * Find user by username
+ * Find account by username
  */
 export const getByUsername = async (username: string) => {
   try {
     return await db.select()
-      .from(schema.users)
-      .where(eq(schema.users.username, username))
+      .from(schema.accounts)
+      .where(eq(schema.accounts.username, username))
       .get()
   }
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to find user by username'
+      statusText: 'Failed to find account by username'
     })
   }
 }
 
 /**
- * Count total users
+ * Count total accounts
  */
-export const count = async () => {
+export const countTotal = async () => {
   try {
-    const result = await db.select({ count: sql<number>`COUNT(*)` })
-      .from(schema.users)
-      .then((res: any) => res[0]?.count ?? 0)
+    const result = await db.select({ value: drizzleCount() })
+      .from(schema.accounts)
 
-    return result
+    return result[0]?.value ?? 0
   }
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to count users'
+      statusText: 'Failed to count accounts'
     })
   }
 }
 
 /**
- * List all users with pagination
+ * List all accounts with pagination
  */
 export const all = async (options: { page?: number, limit?: number } = {}) => {
   const { page = 1, limit = 50 } = options
@@ -107,7 +104,8 @@ export const all = async (options: { page?: number, limit?: number } = {}) => {
 
   try {
     return await db.select()
-      .from(schema.users)
+      .from(schema.accounts)
+      .orderBy(desc(schema.accounts.createdAt))
       .limit(limit)
       .offset(offset)
       .all()
@@ -115,26 +113,24 @@ export const all = async (options: { page?: number, limit?: number } = {}) => {
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to list users'
+      statusText: 'Failed to list accounts'
     })
   }
 }
 
 /**
- * Get user profile by ID with session validation
- * Clears session if user not found
+ * Get account profile by ID
  */
-export const getProfile = async ({ userId, event }: { userId: string, event: H3Event }) => {
-  const user = await db
+export const getProfile = async (accountId: string) => {
+  const account = await db
     .select()
-    .from(schema.users)
-    .where(eq(schema.users.id, userId))
+    .from(schema.accounts)
+    .where(eq(schema.accounts.id, accountId))
     .get()
 
-  if (!user) {
-    await clearUserSession(event)
-    throw createError({ status: 404, statusText: 'User not found' })
+  if (!account) {
+    throw createError({ status: 404, statusText: 'Account not found' })
   }
 
-  return user
+  return account
 }

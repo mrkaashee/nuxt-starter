@@ -1,133 +1,98 @@
 /**
- * Create a new user
+ * Create a new account
  */
-export const create = async (user: NewAccount) => {
+export const create = async (account: typeof schema.accounts.$inferInsert) => {
   try {
-    if (!user.password) {
-      throw createError({ status: 400, statusText: 'Password is required' })
-    }
-    const hashedPassword = await hashPassword(user.password)
-    user.password = hashedPassword
-
-    const createdUser = await db.insert(schema.users)
-      .values(user).onConflictDoNothing()
+    const createdAccount = await db.insert(schema.accounts)
+      .values(account).onConflictDoNothing()
       .returning().get()
 
-    if (!createdUser) {
+    if (!createdAccount) {
       throw createError({
         status: 409,
-        statusText: 'A user with this username already exists.'
+        statusText: 'An account with this username already exists.'
       })
     }
 
-    return createdUser
+    return createdAccount
   }
   catch (err: unknown) {
     const error = err as Error
     if (error.message?.includes('unique constraint')) {
       throw createError({
         status: 409,
-        statusText: 'A user with this username or email already exists.'
+        statusText: 'An account with this username or email already exists.'
       })
     }
 
     throw createError({
       status: 500,
-      statusText: 'Failed to create user',
+      statusText: 'Failed to create account',
       message: error.message
     })
   }
 }
 
 /**
- * Update user by ID
+ * Update account by ID
  */
-export const update = async (id: string, data: Partial<Account>) => {
+export const update = async (id: string, data: Partial<typeof schema.accounts.$inferInsert>) => {
   try {
-    const updatedUser = await db.update(schema.users)
-      .set(data).where(eq(schema.users.id, id))
+    const updatedAccount = await db.update(schema.accounts)
+      .set(data).where(eq(schema.accounts.id, id))
       .returning().get()
 
-    if (!updatedUser) {
+    if (!updatedAccount) {
       throw createError({
         status: 404,
-        statusText: 'User not found'
+        statusText: 'Account not found'
       })
     }
 
-    return updatedUser
+    return updatedAccount
   }
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to update user'
+      statusText: 'Failed to update account'
     })
   }
 }
 
 /**
- * Delete user by ID
+ * Delete account by ID
  */
 export const delById = async (id: string) => {
   try {
-    const deletedUser = await db.delete(schema.users)
-      .where(eq(schema.users.id, id))
+    const deletedAccount = await db.delete(schema.accounts)
+      .where(eq(schema.accounts.id, id))
       .returning().get()
 
-    if (!deletedUser) {
+    if (!deletedAccount) {
       throw createError({
         status: 404,
-        statusText: 'User not found'
+        statusText: 'Account not found'
       })
     }
 
-    return deletedUser
+    return deletedAccount
   }
   catch {
     throw createError({
       status: 500,
-      statusText: 'Failed to delete user'
+      statusText: 'Failed to delete account'
     })
   }
 }
 
 /**
- * Update user password
- */
-export const updatePassword = async (id: string, newPassword: string) => {
-  try {
-    const hashedPassword = await hashPassword(newPassword)
-
-    const updatedUser = await db.update(schema.users)
-      .set({ password: hashedPassword })
-      .where(eq(schema.users.id, id))
-      .returning().get()
-
-    if (!updatedUser) {
-      throw createError({
-        status: 404,
-        statusText: 'User not found'
-      })
-    }
-
-    return updatedUser
-  }
-  catch {
-    throw createError({
-      status: 500,
-      statusText: 'Failed to update password'
-    })
-  }
-}
-
-/**
- * Verify user email
+ * Verify account email
  */
 export const verifyEmail = async (id: string) => {
   try {
-    return await db.update(schema.users)
-      .set({ isEmailVerified: true })
-      .where(eq(schema.users.id, id))
+    return await db.update(schema.accounts)
+      .set({ emailVerified: true })
+      .where(eq(schema.accounts.id, id))
       .returning().get()
   }
   catch {
@@ -139,61 +104,25 @@ export const verifyEmail = async (id: string) => {
 }
 
 /**
- * Verify user phone
+ * Update account profile information with validation
  */
-export const verifyPhone = async (id: string) => {
-  try {
-    return await db.update(schema.users)
-      .set({ isPhoneVerified: true })
-      .where(eq(schema.users.id, id))
-      .returning().get()
-  }
-  catch {
-    throw createError({
-      status: 500,
-      statusText: 'Failed to verify phone'
-    })
-  }
-}
-
-/**
- * Update user last login timestamp
- */
-export const updateLastLogin = async (id: string) => {
-  try {
-    return await db.update(schema.users)
-      .set({ lastLogin: new Date() })
-      .where(eq(schema.users.id, id))
-      .returning().get()
-  }
-  catch {
-    throw createError({
-      status: 500,
-      statusText: 'Failed to update last login'
-    })
-  }
-}
-
-/**
- * Update user profile information with validation
- */
-export const updateProfile = async (id: string, data: Partial<Account>) => {
+export const updateProfile = async (id: string, data: Partial<typeof schema.accounts.$inferSelect>) => {
   const { username, name, email, phone } = data
 
-  // Get current user data
-  const currentUser = await db.query.users.findFirst({
-    where: eq(schema.users.id, id) })
+  // Get current account data
+  const currentAccount = await db.query.accounts.findFirst({
+    where: eq(schema.accounts.id, id) })
 
-  if (!currentUser) {
-    throw createError({ status: 404, statusText: 'User not found' })
+  if (!currentAccount) {
+    throw createError({ status: 404, statusText: 'Account not found' })
   }
 
   // Validation checks
-  if (username && username !== currentUser.username) {
-    const existingUsername = await db.query.users.findFirst({
+  if (username && username !== currentAccount.username) {
+    const existingUsername = await db.query.accounts.findFirst({
       where: and(
-        eq(schema.users.username, username.trim()),
-        ne(schema.users.id, id)
+        eq(schema.accounts.username, username.trim()),
+        ne(schema.accounts.id, id)
       )
     })
     if (existingUsername) {
@@ -206,12 +135,12 @@ export const updateProfile = async (id: string, data: Partial<Account>) => {
     }
   }
 
-  if (email && email !== currentUser.email) {
+  if (email && email !== currentAccount.email) {
     const normalizedEmail = email.toLowerCase().trim()
-    const existingEmail = await db.query.users.findFirst({
+    const existingEmail = await db.query.accounts.findFirst({
       where: and(
-        eq(schema.users.email, normalizedEmail),
-        ne(schema.users.id, id)
+        eq(schema.accounts.email, normalizedEmail),
+        ne(schema.accounts.id, id)
       ) })
     if (existingEmail) {
       return {
@@ -223,11 +152,11 @@ export const updateProfile = async (id: string, data: Partial<Account>) => {
     }
   }
 
-  if (phone && phone !== currentUser.phone) {
-    const existingPhone = await db.query.users.findFirst({
+  if (phone && phone !== currentAccount.phone) {
+    const existingPhone = await db.query.accounts.findFirst({
       where: and(
-        eq(schema.users.phone, phone),
-        ne(schema.users.id, id)
+        eq(schema.accounts.phone, phone),
+        ne(schema.accounts.id, id)
       ) })
     if (existingPhone) {
       return {
@@ -241,65 +170,65 @@ export const updateProfile = async (id: string, data: Partial<Account>) => {
 
   // Proceed with update
   const result = await db
-    .update(schema.users)
+    .update(schema.accounts)
     .set({
-      username: username ? username.trim() : currentUser.username,
+      username: username ? username.trim() : currentAccount.username,
       name,
-      email: email ? email.toLowerCase().trim() : currentUser.email,
+      email: email ? email.toLowerCase().trim() : currentAccount.email,
       phone,
     })
-    .where(eq(schema.users.id, id)).returning()
+    .where(eq(schema.accounts.id, id)).returning()
 
   return { success: true, data: result }
 }
 
 /**
- * Update user avatar
+ * Update account avatar
  */
 export const updateAvatar = async (id: string, file: File) => {
-  const existingUser = await db.query.users.findFirst({
-    where: eq(schema.users.id, id)
+  const existingAccount = await db.query.accounts.findFirst({
+    where: eq(schema.accounts.id, id)
   })
 
-  if (!existingUser) {
-    throw createError({ status: 404, statusText: 'User not found' })
+  if (!existingAccount) {
+    throw createError({ status: 404, statusText: 'Account not found' })
   }
 
-  let avatarPath = existingUser.avatar
+  let avatarPath = existingAccount.avatar
   if (file && file.size > 0) {
     ensureBlob(file, { maxSize: '2MB', types: ['image'] })
     const { blob } = await import('@nuxthub/blob')
-    const blobResult = await blob.put(`user-avatar/${file.name}`, file, { addRandomSuffix: true })
+    const blobResult = await blob.put(`account-avatar/${file.name}`, file, { addRandomSuffix: true })
     avatarPath = blobResult.pathname
 
-    if (existingUser.avatar && existingUser.avatar !== avatarPath) {
-      await blob.del(existingUser.avatar.replace(/^\/+/, ''))
+    if (existingAccount.avatar && existingAccount.avatar !== avatarPath) {
+      await blob.del(existingAccount.avatar.replace(/^\/+/, ''))
     }
   }
 
-  const updatedUser = await db.update(schema.users)
+  const updatedAccount = await db.update(schema.accounts)
     .set({ avatar: avatarPath })
-    .where(eq(schema.users.id, id))
+    .where(eq(schema.accounts.id, id))
     .returning().get()
 
-  return updatedUser
+  return updatedAccount
 }
 
 /**
- * Delete user avatar
+ * Delete account avatar
  */
 export const deleteAvatar = async (id: string) => {
-  const user = await db.query.users.findFirst({
-    where: eq(schema.users.id, id) })
+  const account = await db.query.accounts.findFirst({
+    where: eq(schema.accounts.id, id) })
 
-  if (!user) {
-    throw createError({ status: 404, statusText: 'User not found' })
+  if (!account) {
+    throw createError({ status: 404, statusText: 'Account not found' })
   }
 
-  const avatarPath = user.avatar
-  const result = await db.update(schema.users)
+  const avatarPath = account.avatar
+  const result = await db.update(schema.accounts)
     .set({ avatar: null })
-    .where(eq(schema.users.id, id))
+    .where(eq(schema.accounts.id, id))
     .returning()
 
   if (avatarPath) {
