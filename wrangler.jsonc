@@ -13,25 +13,7 @@
   // if hub.db is enabled
   "d1_databases": [{
     "binding": "DB",
-    "database_name": "",
-    "database_id": "",
     "migrations_table": "_hub_migrations",
     "migrations_dir": "server/db/migrations/sqlite/",
  }],
- // if hub.blob is enabled
-  "r2_buckets": [{
-    "binding": "BLOB",
-    "bucket_name": ""
-  }],
-  // if hub.kv or hub.cache is enabled
-  "kv_namespaces": [
-    {
-      "binding": "CACHE",
-      "id": ""
-    },
-    {
-      "binding": "KV",
-      "id": ""
-    }
-  ],
 }

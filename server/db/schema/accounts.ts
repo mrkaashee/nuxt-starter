@@ -12,6 +12,7 @@ export const accounts = sqliteTable('accounts', {
 
   // Profile (Kept lean)
   name: text(),
+  phone: text(),
   username: text().unique(),
   avatar: text(),
 
