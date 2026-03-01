@@ -2,16 +2,50 @@
 import type * as z from 'zod'
 import type { FormSubmitEvent, AuthFormField } from '@nuxt/ui'
 
+const toast = useToast()
 const loading = ref(false)
+
 const fields = ref<AuthFormField[]>([
-  { name: 'email', type: 'text', label: 'Email', required: true },
+  { name: 'username', type: 'text', label: 'Username', required: true },
   { name: 'password', type: 'password', label: 'Password', required: true }
 ])
 
 type Schema = z.output<typeof schemas.accounts.register>
 
-function onSubmit(payload: FormSubmitEvent<Schema>) {
+async function onSubmit(payload: FormSubmitEvent<Schema>) {
   console.log('Submitted', payload)
+
+  loading.value = true
+  try {
+    await $fetch('/api/accounts/register', {
+      method: 'POST',
+      body: payload.data,
+    })
+
+    toast.add({
+      title: 'Account created successfully!',
+      icon: 'i-lucide-check-circle',
+      color: 'primary',
+    })
+    navigateTo('/login')
+  }
+  catch (error: unknown) {
+    const err = error as { data?: { statusText?: string }, message?: string }
+    const message
+      = err?.data?.statusText
+        || err?.message
+        || 'An unexpected error occurred. Please try again.'
+
+    toast.add({
+      title: 'Registration failed',
+      description: message,
+      icon: 'i-lucide-x-circle',
+      color: 'error',
+    })
+  }
+  finally {
+    loading.value = false
+  }
 }
 </script>
 

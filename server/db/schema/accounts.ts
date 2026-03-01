@@ -5,7 +5,8 @@ export const accounts = sqliteTable('accounts', {
   ..._uuid,
 
   // Auth
-  email: text().unique().notNull(),
+  username: text().unique().notNull(),
+  email: text().unique(),
   password: text(), // Nullable for OAuth users
   role: text({ enum: ['admin', 'user'] }).default('user').notNull(),
   emailVerified: integer('email_verified', { mode: 'boolean' }).default(false),
@@ -13,7 +14,6 @@ export const accounts = sqliteTable('accounts', {
   // Profile (Kept lean)
   name: text(),
   phone: text(),
-  username: text().unique(),
   avatar: text(),
 
   // Flexible storage for project-specific extras (bio, phone, preferences, etc)
