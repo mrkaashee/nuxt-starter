@@ -25,6 +25,6 @@ export default defineNuxtConfig({
     preset: 'cloudflare_module',
     cloudflare: { deployConfig: true, nodeCompat: true }
   },
-  hub: { blob: true, cache: true, db: 'sqlite', kv: true },
+  hub: { db: 'sqlite' },
   eslint: { config: { stylistic: true } },
 })

@@ -13,6 +13,8 @@
   // if hub.db is enabled
   "d1_databases": [{
     "binding": "DB",
+    "database_name": "qarpeo",
+    "database_id": "ed77c9c6-add3-477d-ba76-38f3ea26be1c",
     "migrations_table": "_hub_migrations",
     "migrations_dir": "server/db/migrations/sqlite/",
  }],

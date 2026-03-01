@@ -1,5 +1,45 @@
+<script setup lang="ts">
+import type * as z from 'zod'
+import type { FormSubmitEvent, AuthFormField } from '@nuxt/ui'
+
+const loading = ref(false)
+const fields = ref<AuthFormField[]>([
+  { name: 'email', type: 'text', label: 'Email', required: true },
+  { name: 'password', type: 'password', label: 'Password', required: true }
+])
+
+type Schema = z.output<typeof schemas.accounts.register>
+
+function onSubmit(payload: FormSubmitEvent<Schema>) {
+  console.log('Submitted', payload)
+}
+</script>
+
 <template>
-  <UMain>
-    <!--  -->
+  <UMain class="flex flex-col items-center justify-center">
+    <UPageCard class="max-w-md w-full">
+      <UAuthForm
+        :schema="schemas.accounts.register"
+        title="Register"
+        description="Enter your credentials to access your account."
+        icon="i-lucide-user"
+        :loading
+        :fields="fields"
+        :submit="{ label: 'Submit', color: 'primary', variant: 'subtle' }"
+        class="max-w-md"
+        @submit="onSubmit">
+        <template #description>
+          Already have an account?
+          <ULink to="/login" class="text-primary font-medium">Log in</ULink>.
+        </template>
+
+        <template #footer>
+          By creating an account, you agree to our
+          <ULink to="#" class="text-primary font-medium">Terms of Service</ULink>
+          and
+          <ULink to="#" class="text-primary font-medium">Privacy Policy</ULink>.
+        </template>
+      </UAuthForm>
+    </UPageCard>
   </UMain>
 </template>
