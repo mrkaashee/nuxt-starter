@@ -9,7 +9,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "db:generate": "drizzle-kit generate",
+    "db:generate": "nuxt db generate",
     "db:migrate": "wrangler d1 migrations apply DB",
     "db:migrate-remote": "wrangler d1 migrations apply DB --remote",
     "lint": "eslint .",
