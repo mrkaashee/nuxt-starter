@@ -1,8 +1,8 @@
 export default eventHandler(async event => {
   const body = await readBody(event)
 
-  if (!body.email || !body.password || !body.username)
-    throw createError({ statusCode: 400, statusMessage: 'Email, username, and password are required' })
+  if (!body.username || !body.password)
+    throw createError({ statusCode: 400, statusMessage: 'Username, and password are required' })
 
   // Hash the password securely before passing to the generic ORM
   const hashedPassword = await hashPassword(body.password)
