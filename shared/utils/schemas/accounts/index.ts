@@ -1,9 +1,9 @@
-import { accounts } from '@nuxthub/db/schema'
+import { accounts as accountsSchema } from '@nuxthub/db/schema'
 import { createInsertSchema } from 'drizzle-orm/zod'
 
-const base = createInsertSchema(accounts)
+const base = createInsertSchema(accountsSchema)
 
-export default {
+export const accounts = {
   create: base,
   register: base.pick({ username: true, password: true }),
   login: base.pick({ username: true, password: true }),
