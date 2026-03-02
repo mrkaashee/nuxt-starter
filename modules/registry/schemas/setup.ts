@@ -1,4 +1,3 @@
-import { mkdir, copyFile, writeFile, readFile, stat } from 'node:fs/promises'
 import type { Nuxt } from '@nuxt/schema'
 import { getLayerDirectories, updateTemplates, addTemplate } from '@nuxt/kit'
 import { join, resolve as resolveFs, relative } from 'pathe'
@@ -17,8 +16,10 @@ export async function setupSchemas(nuxt: Nuxt) {
 async function generateSharedSchemas(nuxt: Nuxt) {
   const getSchemasPaths = async () => {
     const schemasPatterns = getLayerDirectories(nuxt).map(layer => [
-      resolveFs(layer.shared, 'utils/schemas.ts'),
-      resolveFs(layer.shared, 'utils/schemas/*.ts')
+      resolveFs(layer.shared, 'schemas/*.{ts,js,mjs,cjs}').replace(/\\/g, '/'),
+      resolveFs(layer.shared, 'schemas/*/index.{ts,js,mjs,cjs}').replace(/\\/g, '/'),
+      resolveFs(layer.shared, 'utils/schemas/*.{ts,js,mjs,cjs}').replace(/\\/g, '/'),
+      resolveFs(layer.shared, 'utils/schemas/*/index.{ts,js,mjs,cjs}').replace(/\\/g, '/')
     ]).flat()
 
     const schemasPaths = await glob(schemasPatterns, { absolute: true, onlyFiles: true })
@@ -56,9 +57,16 @@ async function generateSharedSchemas(nuxt: Nuxt) {
   // Generate final database schema file at .nuxt/registry/schemas.entry.ts
   addTemplate({
     filename: 'registry/schemas.entry.ts',
-    getContents: () => `${schemasPaths.map(path => `export * from '${path}'`).join('\n')}`,
+    getContents: () => {
+      const imports = schemasPaths.map((path, i) => `import * as _${i} from '${path}'`).join('\n')
+      const spread = schemasPaths.map((_, i) => `..._${i}`).join(', ')
+      return `${imports}\n\nexport const schemas = { ${spread} }`
+    },
     write: true
   })
+
+  // Initial build
+  await buildSharedSchemas(nuxt.options.buildDir, { relativeDir: nuxt.options.rootDir, alias: nuxt.options.alias })
 }
 
 export async function buildSharedSchemas(buildDir: string, { relativeDir, alias }: { relativeDir?: string, alias?: Record<string, string> } = {}) {
@@ -67,7 +75,7 @@ export async function buildSharedSchemas(buildDir: string, { relativeDir, alias 
   const entry = join(buildDir, 'registry/schemas.entry.ts')
   await build({
     entry: {
-      schema: entry
+      schemas: entry
     },
     outDir: join(buildDir, 'registry'),
     outExtensions: () => ({
@@ -91,5 +99,5 @@ export async function buildSharedSchemas(buildDir: string, { relativeDir, alias 
     logLevel: 'warn'
   })
   const duration = Date.now() - startTime
-  console.debug(`shared schemas built successfully at \`${relative(relativeDir, join(buildDir, 'hub/db/schema.mjs'))}\` (${duration}ms)`)
+  console.debug(`shared schemas built successfully at \`${relative(relativeDir, join(buildDir, 'registry/schemas.mjs'))}\` (${duration}ms)`)
 }

@@ -1,3 +1,4 @@
+import { schema } from '@nuxthub/db'
 /**
  * Create a new account
  */

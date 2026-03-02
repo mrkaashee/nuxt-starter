@@ -1,11 +1,7 @@
-// `nuxt/kit` is a helper subpath import you can use when defining local modules
-// that means you do not need to add `@nuxt/kit` to your project's dependencies
-import { addComponentsDir, addServerHandler, createResolver, defineNuxtModule } from 'nuxt/kit'
+import { defineNuxtModule, addTemplate } from 'nuxt/kit'
+import { join } from 'pathe'
 import { setupSchemas } from './schemas/setup'
-
-// export interface ModuleHooks {
-//   'registry:schemas:extend': (paths: string[]) => void | Promise<void>
-// }
+import { setupOrm } from './orm/setup'
 
 export default defineNuxtModule({
   meta: {
@@ -13,8 +9,55 @@ export default defineNuxtModule({
   },
   async setup(options, nuxt) {
     console.log('Registry is loaded!')
-    // const resolver = createResolver(import.meta.url)
+
+    // Add aliases for the bundled registries
+    nuxt.options.alias['#schemas'] = join(nuxt.options.buildDir, 'registry/schemas.mjs')
+    nuxt.options.alias['#orm'] = join(nuxt.options.buildDir, 'registry/orm.mjs')
+
+    // Add auto-imports
+    nuxt.hook('imports:extend', imports => {
+      imports.push({ name: 'schemas', from: '#schemas' })
+      imports.push({ name: 'orm', from: '#orm' })
+    })
+
+    // Add Nitro auto-imports
+    nuxt.hook('nitro:config', nitroConfig => {
+      nitroConfig.alias = nitroConfig.alias || {}
+      nitroConfig.alias['#schemas'] = join(nuxt.options.buildDir, 'registry/schemas.mjs')
+      nitroConfig.alias['#orm'] = join(nuxt.options.buildDir, 'registry/orm.mjs')
+
+      nitroConfig.imports = nitroConfig.imports || {}
+      nitroConfig.imports.presets = nitroConfig.imports.presets || []
+      nitroConfig.imports.presets.push({
+        from: '#schemas',
+        imports: ['schemas']
+      })
+      nitroConfig.imports.presets.push({
+        from: '#orm',
+        imports: ['orm']
+      })
+    })
+    addTemplate({
+      filename: 'registry.d.ts',
+      getContents: () => `
+declare module '#schemas' {
+  const schemas: typeof import('${join(nuxt.options.buildDir, 'registry/schemas.mjs')}').schemas
+  export { schemas }
+}
+
+declare module '#orm' {
+  const orm: typeof import('${join(nuxt.options.buildDir, 'registry/orm.mjs')}').orm
+  export { orm }
+}
+      `,
+      write: true
+    })
+
+    nuxt.hook('prepare:types', ({ references }) => {
+      references.push({ path: join(nuxt.options.buildDir, 'registry.d.ts') })
+    })
 
     await setupSchemas(nuxt)
+    await setupOrm(nuxt)
   },
 })

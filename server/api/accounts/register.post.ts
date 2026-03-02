@@ -1,8 +1,8 @@
 export default eventHandler(async event => {
   const body = await readBody(event)
 
-  if (!body.username || !body.password)
-    throw createError({ statusCode: 400, statusMessage: 'Username, and password are required' })
+  // Validate request body using schemas
+  schemas.accounts.register.parse(body)
 
   // Hash the password securely before passing to the generic ORM
   const hashedPassword = await hashPassword(body.password)
