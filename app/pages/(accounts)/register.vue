@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { schemas } from '#schemas'
 import type * as z from 'zod'
 import type { FormSubmitEvent, AuthFormField } from '@nuxt/ui'
 
