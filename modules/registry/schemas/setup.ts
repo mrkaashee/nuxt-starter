@@ -8,9 +8,7 @@ export async function setupSchemas(nuxt: Nuxt) {
   const getSchemasPaths = async () => {
     const schemasPatterns = getLayerDirectories(nuxt).map(layer => [
       resolveFs(layer.shared, 'schemas/*.{ts,js,mjs,cjs}').replace(/\\/g, '/'),
-      resolveFs(layer.shared, 'schemas/*/index.{ts,js,mjs,cjs}').replace(/\\/g, '/'),
-      resolveFs(layer.shared, 'utils/schemas/*.{ts,js,mjs,cjs}').replace(/\\/g, '/'),
-      resolveFs(layer.shared, 'utils/schemas/*/index.{ts,js,mjs,cjs}').replace(/\\/g, '/')
+      resolveFs(layer.shared, 'schemas/*/index.{ts,js,mjs,cjs}').replace(/\\/g, '/')
     ]).flat()
 
     const schemasPaths = await glob(schemasPatterns, { absolute: true, onlyFiles: true })
@@ -43,7 +41,7 @@ export async function setupSchemas(nuxt: Nuxt) {
 }
 
 function setupSchemasWatcher(nuxt: Nuxt) {
-  const watchDirs = getLayerDirectories(nuxt).map(layer => resolveFs(layer.shared, 'utils', 'schemas'))
+  const watchDirs = getLayerDirectories(nuxt).map(layer => resolveFs(layer.shared, 'schemas'))
   const watcher = chokidar.watch(watchDirs, { ignoreInitial: true })
   watcher.on('all', async (event, path) => {
     if (!['add', 'unlink', 'change'].includes(event)) return
