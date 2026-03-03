@@ -9,14 +9,6 @@ export default defineNuxtModule({
     name: 'registry',
   },
   async setup(options, nuxt) {
-    const logPath = join(nuxt.options.rootDir, 'registry_debug.log')
-    const log = (msg: string) => {
-      console.log(msg)
-      fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${msg}\n`)
-    }
-
-    log('Registry is loaded!')
-
     const ormPath = join(nuxt.options.buildDir, 'registry/orm.ts')
     const schemasPath = join(nuxt.options.buildDir, 'registry/schemas.ts')
 
@@ -56,6 +48,7 @@ declare module '#orm' {
     })
 
     // BLOCK NITRO TYPES FROM APP CONTEXT
+    // This blocks Nitro's global types from leaking into app files via TypeScript logic
     nuxt.options.typescript.tsConfig = nuxt.options.typescript.tsConfig || {}
     nuxt.options.typescript.tsConfig.exclude = nuxt.options.typescript.tsConfig.exclude || []
     if (!nuxt.options.typescript.tsConfig.exclude.includes('./types/nitro.d.ts')) {
@@ -65,7 +58,7 @@ declare module '#orm' {
     const performScrub = () => {
       const buildDir = nuxt.options.buildDir
 
-      // 1. Scrub ESLint
+      // 1. Physical Scrub for ESLint Configuration
       const eslintPath = join(buildDir, 'eslint.config.mjs')
       if (fs.existsSync(eslintPath)) {
         let content = fs.readFileSync(eslintPath, 'utf8')
@@ -85,16 +78,16 @@ declare module '#orm' {
         if (changed) {
           content = content.replace(/,\s*,/g, ',').replace(/\[\s*,/g, '[').replace(/,\s*\]/g, ']')
           fs.writeFileSync(eslintPath, content)
-          log('Physically scrubbed eslint.config.mjs')
         }
       }
 
-      // 2. Scrub nuxt.d.ts
+      // 2. Physical Scrub for nuxt.d.ts (Triple-slash references)
       const nuxtDtsPath = join(buildDir, 'nuxt.d.ts')
       if (fs.existsSync(nuxtDtsPath)) {
         const content = fs.readFileSync(nuxtDtsPath, 'utf8')
         const lines = content.split('\n')
         const filteredLines = lines.filter(line => {
+          // Remove Nitro, server utilities, and hub/db leakage from global types
           if (line.includes('nitro') || line.includes('server') || line.includes('hub/db')) {
             return false
           }
@@ -102,12 +95,12 @@ declare module '#orm' {
         })
         if (lines.length !== filteredLines.length) {
           fs.writeFileSync(nuxtDtsPath, filteredLines.join('\n'))
-          log('Physically scrubbed nuxt.d.ts')
         }
       }
     }
 
-    // MULTI-STAGE SCRUBBING
+    // MULTI-STAGE ISOLATION
+    // Stage 1: Filter internal Nuxt memory references
     nuxt.hook('prepare:types', options => {
       for (let i = options.references.length - 1; i >= 0; i--) {
         const ref = options.references[i]
@@ -125,16 +118,23 @@ declare module '#orm' {
       }
     })
 
-    // Use every possible late hook
-    nuxt.hook('ready', () => performScrub())
-
-    nuxt.hook('app:templatesGenerated' as any, () => performScrub())
-    nuxt.hook('close', () => {
-      log('Hook close triggered - performing FINAL scrub')
-      performScrub()
+    // Stage 2: Live Watcher for Physical File Scrubbing
+    // Nuxt often rewrites these files multiple times; this ensures they are cleaned immediately.
+    const buildDirWatcher = fs.watch(nuxt.options.buildDir, (event, filename) => {
+      if (filename === 'nuxt.d.ts' || filename === 'eslint.config.mjs') {
+        performScrub()
+      }
     })
 
-    // Auto-imports filter
+    // Stage 3: Hook-based Scrubbing as insurance
+    nuxt.hook('ready', () => performScrub())
+    nuxt.hook('app:templatesGenerated' as any, () => performScrub())
+    nuxt.hook('close', () => {
+      performScrub()
+      buildDirWatcher.close()
+    })
+
+    // Explicitly filter out server-only globals from auto-import registry
     nuxt.hook('imports:extend', imports => {
       const serverOnly = ['orm', 'db', 'schema', 'sendSuccess', 'escapeKey']
       for (let i = imports.length - 1; i >= 0; i--) {
@@ -144,7 +144,7 @@ declare module '#orm' {
       }
     })
 
-    // Nitro configuration
+    // NITRO SERVER-ONLY CONFIGURATION
     nuxt.hook('nitro:config', nitroConfig => {
       const serverDts = join(nuxt.options.buildDir, 'registry/server.d.ts')
       if (nitroConfig.imports !== false) {
@@ -163,11 +163,10 @@ declare module '#orm' {
       nitroConfig.typescript = nitroConfig.typescript || {}
       nitroConfig.typescript.tsConfig = nitroConfig.typescript.tsConfig || {}
       nitroConfig.typescript.tsConfig.include = nitroConfig.typescript.tsConfig.include || []
+      // Inject server-specific type definitions (includes ORM)
       if (!nitroConfig.typescript.tsConfig.include.includes(serverDts)) {
         nitroConfig.typescript.tsConfig.include.push(serverDts)
       }
     })
-
-    log('Setup complete.')
   },
 })
