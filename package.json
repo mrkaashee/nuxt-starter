@@ -16,24 +16,26 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@libsql/client": "^0.17.0",
+    "@libsql/client": "^0.17.2",
     "@nuxt/eslint": "^1.15.2",
-    "@nuxt/hints": "^1.0.0-alpha.10",
+    "@nuxt/hints": "^1.0.2",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.5.0",
-    "@nuxthub/core": "^0.10.6",
-    "drizzle-orm": "^1.0.0-beta.15-859cf75",
+    "@nuxt/ui": "^4.6.0",
+    "@nuxthub/core": "^0.10.7",
+    "drizzle-orm": "^0.45.1",
+    "drizzle-zod": "^0.8.3",
     "nuxt": "^4.3.1",
     "nuxt-auth-utils": "0.5.29",
+    "tailwindcss": "^4.2.2",
     "uuid": "^13.0.0",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.95",
-    "drizzle-kit": "^1.0.0-beta.15-859cf75",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^10.0.2",
-    "typescript": "^5.9.3",
-    "wrangler": "^4.69.0"
+    "typescript": "^6.0.2",
+    "wrangler": "^4.76.0"
   }
 }

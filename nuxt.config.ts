@@ -43,10 +43,7 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true, timeline: { enabled: true } },
   css: ['~/assets/css/main.css'],
-  ui: {
-    content: true,
-    experimental: { componentDetection: true }
-  },
+  ui: { experimental: { componentDetection: true } },
   // future: { compatibilityVersion: 5 },
   experimental: {
     typedPages: true, writeEarlyHints: true,

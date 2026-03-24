@@ -1,5 +1,5 @@
 import { accounts } from '@nuxthub/db/schema'
-import { createInsertSchema } from 'drizzle-orm/zod'
+import { createInsertSchema } from 'drizzle-zod'
 
 const base = createInsertSchema(accounts)
 
