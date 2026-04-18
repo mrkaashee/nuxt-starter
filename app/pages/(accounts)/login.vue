@@ -1,5 +1,0 @@
-<template>
-  <UMain>
-    <!--  -->
-  </UMain>
-</template>
