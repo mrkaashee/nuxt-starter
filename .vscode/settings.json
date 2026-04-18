@@ -140,5 +140,6 @@
       "overviewRulerColor": "#4682B4",
       "isWholeLine": false
     }
-  ]
+  ],
+  "kiroAgent.configureMCP": "Disabled"
 }
