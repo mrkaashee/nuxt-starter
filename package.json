@@ -18,13 +18,13 @@
   "dependencies": {
     "@libsql/client": "^0.17.2",
     "@nuxt/eslint": "^1.15.2",
-    "@nuxt/hints": "^1.0.2",
+    "@nuxt/hints": "^1.0.3",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.6.0",
+    "@nuxt/ui": "^4.6.1",
     "@nuxthub/core": "^0.10.7",
-    "drizzle-orm": "^0.45.1",
+    "drizzle-orm": "^0.45.2",
     "drizzle-zod": "^0.8.3",
-    "nuxt": "^4.3.1",
+    "nuxt": "^4.4.2",
     "nuxt-auth-utils": "0.5.29",
     "tailwindcss": "^4.2.2",
     "uuid": "^13.0.0",
@@ -32,10 +32,10 @@
     "vue-router": "latest"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.95",
+    "@iconify-json/lucide": "^1.2.102",
     "drizzle-kit": "^0.31.10",
-    "eslint": "^10.0.2",
-    "typescript": "^6.0.2",
-    "wrangler": "^4.76.0"
+    "eslint": "^10.2.1",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.83.0"
   }
 }
