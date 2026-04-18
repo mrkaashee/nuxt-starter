@@ -8,4 +8,6 @@ export const users = sqliteTable('users', {
   googleId: text(),
   avatar: text(),
   createdAt: integer({ mode: 'timestamp' }),
+  otpToken: text(),
+  otpExpiresAt: integer({ mode: 'timestamp' }),
 })

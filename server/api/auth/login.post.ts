@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
       user: { id: 1, email }
     })
 
-    return 'success'
+    return sendRedirect(event, '/')
   }
   else {
     return 'Not Found'
