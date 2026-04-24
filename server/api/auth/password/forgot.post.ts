@@ -1,21 +1,17 @@
-import sgMail from '@sendgrid/mail'
+import sgMail from "@sendgrid/mail"
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   const { email } = await readBody(event)
 
   if (!email) {
-    throw createError({ status: 400, message: 'Email is required' })
+    throw createError({ status: 400, message: "Email is required" })
   }
 
-  const user = await db
-    .select()
-    .from(schema.users)
-    .where(eq(schema.users.email, email))
-    .get()
+  const user = await db.select().from(schema.users).where(eq(schema.users.email, email)).get()
 
   // Always return success to avoid user enumeration
   if (!user) {
-    return { message: 'If that email exists, an OTP has been sent' }
+    return { message: "If that email exists, an OTP has been sent" }
   }
 
   // Generate 6-digit OTP
@@ -35,7 +31,7 @@ export default defineEventHandler(async event => {
   await sgMail.send({
     to: email,
     from: config.sendgridFromEmail,
-    subject: 'Your password reset OTP',
+    subject: "Your password reset OTP",
     text: `Your OTP is: ${otp}\n\nIt expires in 10 minutes.`,
     html: `
       <p>Your password reset OTP is:</p>
@@ -44,5 +40,5 @@ export default defineEventHandler(async event => {
     `,
   })
 
-  return { message: 'If that email exists, an OTP has been sent' }
+  return { message: "If that email exists, an OTP has been sent" }
 })

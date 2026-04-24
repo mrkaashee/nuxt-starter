@@ -1,4 +1,4 @@
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   const { email, password } = await readBody(event)
 
   const dbUser = await db.select().from(schema.users).where(eq(schema.users.email, email)).get()
@@ -6,12 +6,11 @@ export default defineEventHandler(async event => {
 
   if (isVerified) {
     await setUserSession(event, {
-      user: { id: 1, email }
+      user: { id: 1, email },
     })
 
-    return 'success'
-  }
-  else {
-    return 'Not Found'
+    return "success"
+  } else {
+    return "Not Found"
   }
 })
