@@ -7,14 +7,6 @@
   },
   "tailwindCSS.classAttributes": ["class", "ui"],
   "tailwindCSS.classFunctions": ["defineAppConfig"],
-
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": false,
-  "editor.formatOnType": false,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
-  },
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -39,6 +31,7 @@
   "workbench.colorTheme": "GitHub Dark Default",
   "cSpell.words": [
     "Attendence",
+    "comark",
     "heroicons",
     "iconify",
     "libsql",
@@ -58,88 +51,96 @@
   "todohighlight.keywords": [
     {
       "text": "TODO:",
-      "color": "#FFFFFF", // White text
-      "backgroundColor": "#007ACC", // VS Code blue
+      "color": "#FFFFFF",
+      "backgroundColor": "#007ACC",
       "overviewRulerColor": "#007ACC",
       "isWholeLine": false
     },
     {
       "text": "FIXME:",
       "color": "#FFFFFF",
-      "backgroundColor": "#FF5555", // Soft red
+      "backgroundColor": "#FF5555",
       "overviewRulerColor": "#FF5555",
       "isWholeLine": false
     },
     {
       "text": "BUG:",
       "color": "#FFFFFF",
-      "backgroundColor": "#D70040", // Crimson red
+      "backgroundColor": "#D70040",
       "overviewRulerColor": "#D70040",
       "isWholeLine": false
     },
     {
       "text": "DEBUG:",
       "color": "#000000",
-      "backgroundColor": "#32CD32", // Lime green
+      "backgroundColor": "#32CD32",
       "overviewRulerColor": "#32CD32",
       "isWholeLine": false
     },
     {
       "text": "NOTE:",
       "color": "#000000",
-      "backgroundColor": "#FFD700", // Gold
+      "backgroundColor": "#FFD700",
       "overviewRulerColor": "#FFD700",
       "isWholeLine": false
     },
     {
       "text": "REVIEW:",
       "color": "#000000",
-      "backgroundColor": "#FF8C00", // Dark orange
+      "backgroundColor": "#FF8C00",
       "overviewRulerColor": "#FF8C00",
       "isWholeLine": false
     },
     {
       "text": "HACK:",
       "color": "#FFFFFF",
-      "backgroundColor": "#C71585", // Medium violet-red
+      "backgroundColor": "#C71585",
       "overviewRulerColor": "#C71585",
       "isWholeLine": false
     },
     {
       "text": "OPTIMIZE:",
       "color": "#FFFFFF",
-      "backgroundColor": "#20B2AA", // Light sea green
+      "backgroundColor": "#20B2AA",
       "overviewRulerColor": "#20B2AA",
       "isWholeLine": false
     },
     {
       "text": "CHORE:",
       "color": "#000000",
-      "backgroundColor": "#ADFF2F", // Green yellow
+      "backgroundColor": "#ADFF2F",
       "overviewRulerColor": "#ADFF2F",
       "isWholeLine": false
     },
     {
       "text": "QUESTION:",
       "color": "#FFFFFF",
-      "backgroundColor": "#800080", // Purple
+      "backgroundColor": "#800080",
       "overviewRulerColor": "#800080",
       "isWholeLine": false
     },
     {
       "text": "TEMP:",
       "color": "#000000",
-      "backgroundColor": "#FFA07A", // Light salmon
+      "backgroundColor": "#FFA07A",
       "overviewRulerColor": "#FFA07A",
       "isWholeLine": false
     },
     {
       "text": "WIP:",
       "color": "#FFFFFF",
-      "backgroundColor": "#4682B4", // Steel blue
+      "backgroundColor": "#4682B4",
       "overviewRulerColor": "#4682B4",
       "isWholeLine": false
     }
   ],
-  "kiroAgent.configureMCP": "Disabled"
+  "oxc.enable": true,
+  "oxc.fmt.configPath": "./vite.config.ts",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": false, // disable default behavior
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.format.oxc": "always", // run formatter first
+    "source.fixAll.oxc": "always" // run lint fixes after
+  }
 }
