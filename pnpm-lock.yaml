@@ -40,6 +40,9 @@ importers:
         specifier: ^5.0.6
         version: 5.0.6(@vue/compiler-sfc@3.5.33)(vue@3.5.33(typescript@6.0.3))
     devDependencies:
+      '@iconify-json/lucide':
+        specifier: ^1.2.103
+        version: 1.2.103
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -452,6 +455,9 @@ packages:
   '@humanwhocodes/retry@0.4.3':
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
+
+  '@iconify-json/lucide@1.2.103':
+    resolution: {integrity: sha512-A5WdDll62RPxYs1yeYa9b2mV1Vs+lK/wX0wYKR+xVnhwsfPGLBwo6qfyoAQLo7AaP7oHlkw3gnHdOCERegbwTA==}
 
   '@iconify/collections@1.0.673':
     resolution: {integrity: sha512-xTnmPhEvJLiMVm2ABjYk8t+dg8TgdF7h0RNOXIq0GBsvs1pM5gcVWV6OxaG+7Ocbo05UXGFOxebwonO48fXQmw==}
@@ -5881,6 +5887,10 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3':
     optional: true
+
+  '@iconify-json/lucide@1.2.103':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/collections@1.0.673':
     dependencies:

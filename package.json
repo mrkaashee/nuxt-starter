@@ -20,6 +20,7 @@
     "vue-router": "^5.0.6"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "^1.2.103",
     "typescript": "^6.0.3",
     "vite-plus": "catalog:"
   },
