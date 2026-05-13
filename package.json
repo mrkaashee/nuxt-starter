@@ -11,16 +11,15 @@
     "prepare": "vp config"
   },
   "dependencies": {
-    "@nuxt/hints": "1.0.3",
-    "@nuxt/ui": "^4.6.1",
+    "@nuxt/ui": "^4.7.1",
     "@nuxthub/core": "0.10.7",
-    "nuxt": "^4.4.2",
-    "tailwindcss": "^4.2.4",
-    "vue": "^3.5.33",
-    "vue-router": "^5.0.6"
+    "nuxt": "^4.4.5",
+    "tailwindcss": "^4.3.0",
+    "vue": "^3.5.34",
+    "vue-router": "^5.0.7"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.103",
+    "@iconify-json/lucide": "^1.2.107",
     "typescript": "^6.0.3",
     "vite-plus": "catalog:"
   },
