@@ -32,18 +32,22 @@
   "cSpell.words": [
     "Attendence",
     "comark",
+    "gapcursor",
     "heroicons",
     "iconify",
     "libsql",
+    "llms",
     "lucide",
     "nuxt",
     "nuxthub",
     "nuxtjs",
     "prefs",
+    "prosemirror",
     "qarpeo",
     "Slideover",
     "superadmin",
     "unovis",
+    "vuedraggable",
     "vueuse"
   ],
   "todohighlight.isEnable": true,
@@ -134,13 +138,35 @@
       "isWholeLine": false
     }
   ],
-  "oxc.enable": true,
-  "oxc.fmt.configPath": "./vite.config.ts",
+  // "oxc.enable": true,
+  // "oxc.fmt.configPath": "./vite.config.ts",
+  // "editor.defaultFormatter": "oxc.oxc-vscode",
+  // "editor.formatOnSave": false, // disable default behavior
+  // "editor.formatOnSaveMode": "file",
+  // "editor.codeActionsOnSave": {
+  //   "source.format.oxc": "always", // run formatter first
+  //   "source.fixAll.oxc": "always" // run lint fixes after
+  // },
+
+  "js/ts.experimental.useTsgo": false,
+  "npm.scriptRunner": "vp",
   "editor.defaultFormatter": "oxc.oxc-vscode",
-  "editor.formatOnSave": false, // disable default behavior
+  "oxc.fmt.configPath": "./vite.config.ts",
+  "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
-    "source.format.oxc": "always", // run formatter first
-    "source.fixAll.oxc": "always" // run lint fixes after
+    "source.fixAll.oxc": "explicit"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   }
 }

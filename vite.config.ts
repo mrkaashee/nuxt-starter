@@ -2,7 +2,7 @@ import { defineConfig } from "vite-plus"
 
 export default defineConfig({
   staged: {
-    "*": "vp check --fix",
+    "*.{vue,ts,tsx,js,jsx}": "vp check --fix",
   },
   fmt: {
     exclude: ["server/db/migrations/**"],
