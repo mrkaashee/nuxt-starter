@@ -2,10 +2,9 @@ import { defineConfig } from "vite-plus"
 
 export default defineConfig({
   staged: {
-    "*.{vue,ts,tsx,js,jsx}": "vp check --fix",
+    "*": "vp check --fix",
   },
   fmt: {
-    exclude: ["server/db/migrations/**"],
     semi: false,
     trailingComma: "all",
     sortImports: {
@@ -25,7 +24,8 @@ export default defineConfig({
     },
   },
   lint: {
+    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
+    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
     options: { typeAware: true, typeCheck: true },
-    ignorePatterns: ["server/db/migrations/**"],
   },
 })

@@ -7,6 +7,7 @@
   },
   "tailwindCSS.classAttributes": ["class", "ui"],
   "tailwindCSS.classFunctions": ["defineAppConfig"],
+
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -138,15 +139,6 @@
       "isWholeLine": false
     }
   ],
-  // "oxc.enable": true,
-  // "oxc.fmt.configPath": "./vite.config.ts",
-  // "editor.defaultFormatter": "oxc.oxc-vscode",
-  // "editor.formatOnSave": false, // disable default behavior
-  // "editor.formatOnSaveMode": "file",
-  // "editor.codeActionsOnSave": {
-  //   "source.format.oxc": "always", // run formatter first
-  //   "source.fixAll.oxc": "always" // run lint fixes after
-  // },
 
   "js/ts.experimental.useTsgo": false,
   "npm.scriptRunner": "vp",
