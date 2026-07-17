@@ -1,2 +1,7 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+:root {
+  --ui-container: var(--container-8xl);
+  --font-sans: "Public Sans", sans-serif;
+}
