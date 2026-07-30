@@ -3,8 +3,8 @@ allowBuilds:
   esbuild: true
   vue-demi: true
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.5
-  vite-plus: 0.2.5
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.6
+  vite-plus: 0.2.6
 minimumReleaseAgeExclude:
   - "@voidzero-dev/vite-plus-core@0.2.5"
   - "@voidzero-dev/vite-plus-darwin-arm64@0.2.5"
