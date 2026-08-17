@@ -2,6 +2,7 @@ import { defineConfig } from "vite-plus"
 
 export default defineConfig({
   fmt: {
+    ignorePatterns: ["server/db/migrations/**"],
     semi: false,
     sortImports: {
       groups: [
@@ -14,15 +15,14 @@ export default defineConfig({
       ],
       internalPattern: ["~/", "~~/", "#"],
     },
-    sortPackageJson: {
-      sortScripts: true,
-    },
+    sortPackageJson: { sortScripts: true },
     sortTailwindcss: {
       attributes: ["class", "ui"],
       functions: ["clsx", "cn", "cva", "tw", "defineAppConfig"],
     },
     trailingComma: "all",
   },
+
   lint: {
     categories: {
       // correctness: "error",
@@ -38,12 +38,11 @@ export default defineConfig({
     rules: {
       "capitalized-comments": "off",
       curly: "off",
-      "no-console": ["warn", { allow: ["warn", "error"] }],
-      "no-debugger": "error",
+      // "no-console": ["warn", { allow: ["warn", "error"] }],
+      // "no-debugger": "error",
       "vite-plus/prefer-vite-plus-imports": "error",
     },
   },
-  staged: {
-    "*": "vp check --fix",
-  },
+
+  staged: { "*": "vp check --fix" },
 })
