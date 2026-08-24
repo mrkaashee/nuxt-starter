@@ -3,23 +3,23 @@ allowBuilds:
   esbuild: true
   vue-demi: true
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.9
-  vite-plus: 0.2.9
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.0
+  vite-plus: 0.3.0
 minimumReleaseAgeExclude:
-  - "@voidzero-dev/vite-plus-core@0.2.5"
-  - "@voidzero-dev/vite-plus-darwin-arm64@0.2.5"
-  - "@voidzero-dev/vite-plus-darwin-x64@0.2.5"
-  - "@voidzero-dev/vite-plus-linux-arm64-gnu@0.2.5"
-  - "@voidzero-dev/vite-plus-linux-arm64-musl@0.2.5"
-  - "@voidzero-dev/vite-plus-linux-x64-gnu@0.2.5"
-  - "@voidzero-dev/vite-plus-linux-x64-musl@0.2.5"
-  - "@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.5"
-  - "@voidzero-dev/vite-plus-win32-x64-msvc@0.2.5"
-  - vite-plus@0.2.5
+  - "@voidzero-dev/vite-plus-core@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-darwin-arm64@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-darwin-x64@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-linux-arm64-gnu@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-linux-arm64-musl@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-linux-x64-gnu@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-linux-x64-musl@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.5 || 0.3.0"
+  - "@voidzero-dev/vite-plus-win32-x64-msvc@0.2.5 || 0.3.0"
+  - vite-plus@0.2.5 || 0.3.0
   - "@nuxt/ui@4.10.0"
   - tailwindcss@4.3.3
 overrides:
-  vite: "catalog:"
+  vite@*: "catalog:"
 peerDependencyRules:
   allowAny:
     - vite
