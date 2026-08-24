@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2026-07-20",
+  compatibilityDate: "2026-08-20",
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true, timeline: { enabled: true } },
   experimental: {
