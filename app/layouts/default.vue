@@ -1,8 +1,4 @@
 <template>
-  <UHeader title="Starter">
-    <template #right>
-      <UColorModeButton />
-    </template>
-  </UHeader>
+  <AppHeader />
   <slot />
 </template>
