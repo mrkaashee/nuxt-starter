@@ -21,7 +21,7 @@
     "vue-router": "^5.3.1"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.133",
+    "@iconify-json/lucide": "^1.2.135",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
