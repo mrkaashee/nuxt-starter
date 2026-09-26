@@ -12,7 +12,6 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
-    "@nuxt/hints": "1.1.4",
     "@nuxt/ui": "^4.11.2",
     "@nuxthub/core": "0.10.8",
     "nuxt": "^4.5.2",

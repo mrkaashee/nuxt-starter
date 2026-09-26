@@ -16,6 +16,6 @@ export default defineNuxtConfig({
     writeEarlyHints: true,
   },
   runtimeConfig: { public: { version: pkg.version } },
-  modules: ["@nuxt/ui", "@nuxthub/core", "@nuxt/hints"],
+  modules: ["@nuxt/ui", "@nuxthub/core"],
   tracingChannel: true,
 })
