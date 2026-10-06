@@ -1,4 +1,4 @@
-import pkg from "./package.json"
+import pkg from "./package.json" with { type: "json" }
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -14,8 +14,14 @@ export default defineNuxtConfig({
     viteEnvironmentApi: true,
     watcher: "builder",
     writeEarlyHints: true,
+
+    routeTypedFetch: true,
   },
   runtimeConfig: { public: { version: pkg.version } },
+  nitro: {
+    externals: { inline: [/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/] },
+  },
+  vue: { vapor: true },
   modules: ["@nuxt/ui", "@nuxthub/core"],
   tracingChannel: true,
 })
