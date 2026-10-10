@@ -2,7 +2,7 @@ import pkg from "./package.json" with { type: "json" }
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2026-08-20",
+  compatibilityDate: "2026-10-10",
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true, timeline: { enabled: true } },
   experimental: {
@@ -18,9 +18,7 @@ export default defineNuxtConfig({
     routeTypedFetch: true,
   },
   runtimeConfig: { public: { version: pkg.version } },
-  nitro: {
-    externals: { inline: [/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/] },
-  },
+
   vue: { vapor: true },
   modules: ["@nuxt/ui", "@nuxthub/core"],
   tracingChannel: true,
