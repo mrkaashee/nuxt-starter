@@ -35,6 +35,22 @@ release. Add a tool name to select part of the graph. For example, run
 These rules apply to every AI agent, every developer, and every code change in this
 repository. No exceptions unless explicitly noted.
 
+## Vue SFC Script Tag Convention
+
+Always write `<script setup lang="ts">`. Never write `<script lang="ts" setup>`.
+
+Vapor Mode can also be used as `<script setup vapor lang="ts">` for simple components. Do not use Vapor on every script; reserve it for simple, lightweight components.
+
+```vue
+<!-- ✅ Correct -->
+<script setup lang="ts">
+<script setup vapor lang="ts"> <!-- Simple components only -->
+
+<!-- ❌ Wrong -->
+<script lang="ts" setup>
+<script lang="ts" vapor setup>
+```
+
 ---
 
 ## 1. Vue Event Handlers — Always Use Arrow Functions
@@ -54,43 +70,6 @@ Never bind functions directly in Vue event directives. Always wrap in an arrow f
 Applies to all Vue event directives: `@click`, `@submit`, `@change`, `@input`,
 `@keyup`, `@keydown`, `@blur`, `@focus`, `@update:modelValue`, and all others.
 Applies to every `.vue` file without exception.
-
----
-
-## 2. Vue SFC Block Order — Always `<script>`, `<template>`, `<style>`
-
-Every `.vue` file must follow this exact block order. No exceptions.
-
-```vue
-<!-- ✅ Correct -->
-<script setup lang="ts">
-// logic here
-</script>
-
-<template>
-  <!-- markup here -->
-</template>
-
-<style scoped>
-/* styles here (if needed) */
-</style>
-```
-
-```vue
-<!-- ❌ Wrong — template before script -->
-<template>...</template>
-
-<script setup lang="ts">
-...
-</script>
-```
-
-Rules:
-
-- `<script setup lang="ts">` always comes first
-- `<template>` always comes second
-- `<style scoped>` always comes last (omit entirely if there are no styles — prefer Tailwind utilities over scoped CSS)
-- Never place `<script>` after `<template>`
 
 ---
 
